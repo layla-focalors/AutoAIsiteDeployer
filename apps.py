@@ -1,6 +1,8 @@
 import argparse
 import modules.deploy as deploy
 
+import modules.handler as handler
+
 def main():
     parser = argparse.ArgumentParser(description='AI Learning Auto Deployer', prog='ai-learn')
     parser.add_argument('-t', '--type', type=str, help='Type of Using Deplyer Modeset(Netlify, FastAPI only)')
@@ -19,8 +21,15 @@ def main():
     if(args.location == None):
         print('No Location Specified\nUsing Default Location: ./deploy')
         
-    deploy.makegit(args.location, args.git_url)
-        
-        
+    ORIGIN_HASH = handler.sha1_for_largefile(args.location)
+    # deploy.makegit(args.location, args.git_url)
+    
+    while True:
+        if(ORIGIN_HASH != handler.sha1_for_largefile(args.location)):
+            print(f'[{deploy.gettime()}] Web File Changed\norigin {ORIGIN_HASH["Hash"]} : now {handler.sha1_for_largefile(args.location)["Hash"]}')
+            ORIGIN_HASH = handler.sha1_for_largefile(args.location)
+            # deploy.makegit(args.location, args.git_url)
+    
+    # print(handler.sha1_for_largefile(args.location))
 if __name__ == '__main__':
     main()
