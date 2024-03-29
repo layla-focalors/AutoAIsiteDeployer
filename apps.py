@@ -1,5 +1,5 @@
 import argparse
-import deploy
+import modules.deploy as deploy
 
 def main():
     parser = argparse.ArgumentParser(description='AI Learning Auto Deployer', prog='ai-learn')
