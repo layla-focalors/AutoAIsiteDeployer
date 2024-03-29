@@ -1,13 +1,13 @@
 ## Usage
 push Html file is (deploy > index.html (Default))
-
-├─deploy
-│  └─index.html
-├─modules
-│  ├─apis.py
-│  ├─deploy.py
-│  └─handler.py
-└─app.py
+  
+├─deploy  
+│  └─index.html  
+├─modules  
+│  ├─apis.py  
+│  ├─deploy.py  
+│  └─handler.py  
+└─app.py  
 
 ## Command(ver.01.2)
 ```bash
