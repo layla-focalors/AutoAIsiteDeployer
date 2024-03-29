@@ -1,6 +1,5 @@
 import argparse
 import modules.deploy as deploy
-
 import modules.handler as handler
 
 def main():
@@ -11,10 +10,14 @@ def main():
     
     args = parser.parse_args()
     
+    DEPLOY_SITE = None
+    
     if(args.type == 'Netlify' or args.type == 'netlify' or args.type == 'NETLIFY'):
         print('Deploying to Netlify')
+        DEPLOY_SITE = 'Netlify'
     elif(args.type == 'FastAPI' or args.type == 'fastapi' or args.type == 'FASTAPI'):
         print('Deploying to FastAPI')
+        DEPLOY_SITE = 'FastAPI'
     else:
         print('Invalid Type of Deployer ModeSet')
         
@@ -24,10 +27,22 @@ def main():
     ORIGIN_HASH = handler.sha1_for_largefile(args.location)
     # deploy.makegit(args.location, args.git_url)
     
-    while True:
-        if(ORIGIN_HASH != handler.sha1_for_largefile(args.location)):
-            print(f'[{deploy.gettime()}] Web File Changed\norigin {ORIGIN_HASH["Hash"]} : now {handler.sha1_for_largefile(args.location)["Hash"]}')
-            ORIGIN_HASH = handler.sha1_for_largefile(args.location)
+    # 1회는 무조건 실행 / first Deploy
+    
+    if(DEPLOY_SITE == 'Netlify'):
+        while True:
+            if(ORIGIN_HASH != handler.sha1_for_largefile(args.location)):
+                print(f'[{deploy.gettime()}] Web File Changed\norigin {ORIGIN_HASH["Hash"]} : now {handler.sha1_for_largefile(args.location)["Hash"]}')
+                ORIGIN_HASH = handler.sha1_for_largefile(args.location)
+                
+                if(DEPLOY_SITE == 'Netlify'):
+                    pass
+    elif(DEPLOY_SITE == 'FastAPI'):
+        log = deploy.deploy_to_fastapi(args.location, args.git_url)
+        print(log)
+    else:
+        print('Invalid Deployer ModeSet')
+        
             # deploy.makegit(args.location, args.git_url)
     
     # print(handler.sha1_for_largefile(args.location))
