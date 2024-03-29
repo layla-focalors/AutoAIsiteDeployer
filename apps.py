@@ -30,13 +30,15 @@ def main():
     # 1회는 무조건 실행 / first Deploy
     
     if(DEPLOY_SITE == 'Netlify'):
-        while True:
-            if(ORIGIN_HASH != handler.sha1_for_largefile(args.location)):
-                print(f'[{deploy.gettime()}] Web File Changed\norigin {ORIGIN_HASH["Hash"]} : now {handler.sha1_for_largefile(args.location)["Hash"]}')
-                ORIGIN_HASH = handler.sha1_for_largefile(args.location)
+        print('Netlify Deployer is not Supported Yet')
+        return None
+        # while True:
+        #     if(ORIGIN_HASH != handler.sha1_for_largefile(args.location)):
+        #         print(f'[{deploy.gettime()}] Web File Changed\norigin {ORIGIN_HASH["Hash"]} : now {handler.sha1_for_largefile(args.location)["Hash"]}')
+        #         ORIGIN_HASH = handler.sha1_for_largefile(args.location)
                 
-                if(DEPLOY_SITE == 'Netlify'):
-                    pass
+        #         if(DEPLOY_SITE == 'Netlify'):
+        #             pass
     elif(DEPLOY_SITE == 'FastAPI'):
         log = deploy.deploy_to_fastapi(args.location, args.git_url)
         print(log)
