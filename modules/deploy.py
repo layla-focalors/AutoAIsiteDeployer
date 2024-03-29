@@ -58,6 +58,8 @@ def deploy_to_fastapi(location:str, git_url:str):
     @app.get("/")
     async def home(request: Request):
         ORIGIN_ID = sha1_for_largefile(location)
+        print(ORIGIN_ID)
+        makegit(location, git_url)
         if(ORIGIN_ID != sha1_for_largefile(location)):
             print(f'[{gettime()}] Web File Changed\norigin {ORIGIN_ID["Hash"]} : now {sha1_for_largefile(location)["Hash"]}')
             ORIGIN_ID = sha1_for_largefile(location)
