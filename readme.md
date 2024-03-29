@@ -1,6 +1,7 @@
 ## Usage
 push Html file is (deploy > index.html (Default))
-  
+
+```bash
 ├─deploy  
 │  └─index.html  
 ├─modules  
@@ -8,6 +9,7 @@ push Html file is (deploy > index.html (Default))
 │  ├─deploy.py  
 │  └─handler.py  
 └─app.py  
+```
 
 ## Command(ver.01.2)
 ```bash
